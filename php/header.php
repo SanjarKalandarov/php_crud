@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>CRUD</title>
   <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 
 </head>
 <body>
@@ -19,7 +21,10 @@
                     <a href="index.php">Hamma malmotla</a>
                 </li>
                 <li>
-                    <a href="add.php">Qo'shish</a>
+                    <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Qo'shish</a>
+<!--                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+<!--                        Launch demo modal-->
+<!--                    </button>-->
                 </li>
                 <li>
                     <a href="update.php">Tahrirlash</a>

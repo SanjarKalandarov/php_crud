@@ -1,18 +1,18 @@
-<?php include 'header.php'; ?>
-<div id="main-content">
-    <h2>Yangi ma'lumot qo'shish</h2>
+
+<div class="container">
+
     <form class="post-form" action="./savedate.php" method="post">
         <div class="form-group">
             <label>Nomi</label>
-            <input type="text" name="name" />
+            <input type="text" class="form-control" name="name" />
         </div>
         <div class="form-group">
             <label>Manzili</label>
-            <input type="text" name="manzil" />
+            <input type="text" class="form-control"  name="manzil" />
         </div>
         <div class="form-group">
             <label>Guruh</label>
-            <select name="class">
+            <select name="class" class="form-control"  >
                 <option value="" selected disabled>Guruh  tanlang</option>
                 <?php
                 include "connect.php";
@@ -30,11 +30,14 @@
         </div>
         <div class="form-group">
             <label>Telefon</label>
-            <input type="text" name="telefon" />
+            <input type="text" class="form-control"  name="telefon" />
         </div>
-        <input class="submit" type="submit" value=Saqlash"  />
+<!--        <input class="submit" class="form-control"  type="submit" value=Saqlash"  />-->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
     </form>
 </div>
-</div>
-</body>
-</html>
+
+

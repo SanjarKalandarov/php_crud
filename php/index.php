@@ -1,3 +1,4 @@
+
 <?php
 include 'header.php';
 include 'connect.php';
@@ -7,7 +8,7 @@ include 'connect.php';
 
 
     <?php
-$sql="SELECT*FROM talaba inner join  studentclass on talaba.class=studentclass.cid";
+$sql="SELECT * FROM talaba inner join  studentclass on talaba.class=studentclass.cid";
 $result=mysqli_query($connect,$sql);
 if(mysqli_num_rows($result)>0){
     ?>
@@ -23,9 +24,13 @@ if(mysqli_num_rows($result)>0){
         <tbody>
         <?php
         while($row=mysqli_fetch_assoc($result)){
-
-
-        ?>
+            $data[$row['id']] = [];
+            $data[$row['id']]['id'] = $row['id'];
+            $data[$row['id']]['name'] = $row['name'];
+            $data[$row['id']]['manzil'] = $row['manzil'];
+            $data[$row['id']]['telefon'] = $row['telefon'];
+            $data[$row['id']]['cid'] = $row['cid'];
+            ?>
             <tr>
                 <td> <?php echo $row['id'] ?></td>
                 <td><?php echo $row['name'] ?></td>
@@ -33,7 +38,7 @@ if(mysqli_num_rows($result)>0){
                 <td><?php echo $row['cname'] ?></td>
                 <td><?php echo $row['telefon'] ?></td>
                 <td>
-                    <a href='edit.php?id=<?php echo $row['id'];?>'>Edit</a>
+                    <a  href="" data-bs-toggle="modal" onclick="edit(<?php echo $row['id'] ?>)" data-bs-target="#exampleModal2">Edit</a>
                     <a href='delete-inline.php?id=<?php echo $row['id'];?>' class="show_confirm">Delete</a>
                 </td>
             </tr>
@@ -51,5 +56,101 @@ mysqli_close($connect);
     ?>
 </div>
 </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Yangi ma'lumot qo'shish</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php include "add.php";?>
+            </div>
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Yangi ma'lumot qo'shish</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="post-form" action="updatedata.php" method="post">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="hidden" name="id" id="id" value="<?php echo $row['id'];?>"/>
+                        <input type="text" name="name" id="name" class="form-control" value="<?php echo $row['name'];?>"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" name="manzil" id="manzil" class="form-control" value="<?php echo $row['manzil'] ?>"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Class</label>
+
+                        <?php
+                        include "connect.php";
+
+
+                        $sql="Select * from studentclass";
+                        $result=mysqli_query($connect,$sql) or die('Hatolik yuuz  berdi');
+                        if(mysqli_num_rows($result)>0){
+                            echo '<select name="class" id="class" class="form-control" >';
+                            while($row1=mysqli_fetch_assoc($result)){
+                                if($row['class']==$row1['cid']){
+                                    $select="Selected";
+                                }
+                                else {
+                                    $select="";
+                                }
+                                echo "<option {$select} value='{$row1["cid"]}'>{$row1["cname"]} </option>";
+                            }
+                            echo '</select>';
+                        }
+                        ?>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" name="telefon" id="telefon" class="form-control" value="<?php echo $row['telefon'];?>"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var data=<?php echo json_encode($data)?>;
+    console.log(data);
+    function edit(id){
+        var student = data[id];
+        console.log(student);
+        document.getElementById('id').value=student['id'];
+        document.getElementById('name').value=student['name'];
+        document.getElementById('manzil').value=student['manzil'];
+        document.getElementById('telefon').value=student['telefon'];
+        document.getElementById('class').value=student['cid'];
+
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
